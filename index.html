@@ -24,7 +24,7 @@
         let mainContainer = document.getElementById("myData");
         for (let i = 0; i < data.length; i++) {
             let div = document.createElement("div");
-            div.innerHTML = 'Name: ' + data[i].firstName + ' ' + data[i].lastName;
+            div.innerHTML = 'ID: ' + data[i].ID + ' ' + data[i].Name + ' ' + data[i].Rule;
             mainContainer.appendChild(div);
         }
     }
