@@ -6,9 +6,9 @@
 {"ID": 5, "Name": "Demonic Tutor ", "Rule": "Search your library for a card and put it in your hand, then shuffle."},
 {"ID": 6, "Name": "Eureka ", "Rule": "Each player may put one permanent card from their hand onto the battlefield. Loss life equal to the converted mana cost"},
 {"ID": 7, "Name": "Exhume ", "Rule": "Each player puts a creature card from their graveyard onto the battlefield."},
-{"ID": 8, "Name": "tnahC smirO ", "Rule": "You cant cast spells this turn. If any player pays 5 life, your creatures cant attack this turn either."},
+{"ID": 8, "Name": "tnahC smirO ", "Rule": "You can not cast spells this turn. If any player pays 5 life, your creatures can not attack this turn either."},
 {"ID": 9, "Name": "Better Off Dead ", "Rule": "Put a creature card from your graveyard onto the battlefield under target opponents control."},
-{"ID": 10, "Name": "eugitaF ", "Rule": "You cant draw cards this turn."},
+{"ID": 10, "Name": "eugitaF ", "Rule": "You can not draw cards this turn."},
 {"ID": 11, "Name": "Reins of Power ", "Rule": "Exchange control of all creatures you control and all creatures an opponent controls until end of turn. They gain haste until end of turn.\r\n"},
 {"ID": 12, "Name": "Crimson Hellflame ", "Rule": "You may pay 1 life many times as you like. Deal that much damage to target creature."},
 {"ID": 13, "Name": "Syphon Soul ", "Rule": "Deal 2 damage to each opponent and gain that much life."},
@@ -133,8 +133,8 @@
 {"ID": 132, "Name": "Life perm", "Rule": "All players get life equal to the amount of permanents that player controls."},
 {"ID": 133, "Name": "Extra mana", "Rule": "All of your lands produce an additional mana of the appropriate type when tapped for mana this turn."},
 {"ID": 134, "Name": "Opponent library", "Rule": "Look at the top three cards of target opponent library, then put them back in any order. You may have that player shuffle his or her library."},
-{"ID": 135, "Name": "Intimidation", "Rule": "Until your next turn, you cannot be attacked"},
-{"ID": 136, "Name": "Calm", "Rule": "There are no Chaos Phases until your next turn. "},
+{"ID": 135, "Name": "Intimidation", "Rule": "Until your next turn, you can not be attacked"},
+{"ID": 136, "Name": "Calm", "Rule": "There are no Chaos Phases until your next turn."},
 {"ID": 137, "Name": "Storm", "Rule": "Players roll two Chaos Rolls per turn, until the end of your next turn."},
 {"ID": 138, "Name": "Activation cost", "Rule": "You may pay the activation cost of any activated ability of any nonland permanent, until the end of your turn."},
 {"ID": 139, "Name": "Double ", "Rule": "Double all life gained or damage dealt after the Chaos Phase, until end of your turn"},
@@ -148,5 +148,5 @@
 {"ID": 147, "Name": "More tokens", "Rule": "For every creature attacking this turn, create that many 2/2 green wolf tokens onto that players battlefield."},
 {"ID": 148, "Name": "Destroy at random", "Rule": "Choose target nonland permanent you control and up to two target nonland permanents you dont control. Destroy one of them at random."},
 {"ID": 149, "Name": "Discard ", "Rule": "Discard your hand, get a x/x creature with haste where x is the number of cards you discarded this Way"},
-{"ID": 150, "Name": "Land pr not", "Rule": "You may play 2 lands this turn, if you cant all other players put a land onto the battlefield at the end of your turn"}
+{"ID": 150, "Name": "Land pr not", "Rule": "You may play 2 lands this turn, if you can not all other players put a land onto the battlefield"}
 ]
