@@ -20,15 +20,20 @@
             console.log('error: ' + err);
         });
 
-    function appendData(data) {
-        let mainContainer = document.getElementById("myData");
-        for (let i = 0; i < data.length; i++) {
-            let div = document.createElement("div");
-            //div.innerHTML = 'Rule: ' + data[i].ID + ' ' + data[i].Name + ' ' + data[i].Rule;
-            div.innerHTML ="hej";
-            mainContainer.appendChild(div);
-        }
-    }
+btnName.onclick = () => {
+  document.getElementById("myData").innerHTML = 
+  names[Math.floor(Math.random() * names.length)]
+}    
+
+//    function appendData(data) {
+//        let mainContainer = document.getElementById("myData");
+        
+//        for (let i = 0; i < data.length; i++) {
+//            let div = document.createElement("div");
+//            div.innerHTML = 'Rule: ' + data[i].ID + ' ' + data[i].Name + ' ' + data[i].Rule;
+//            mainContainer.appendChild(div);
+//        }
+//    }
 </script>
 </body>
 </html>
