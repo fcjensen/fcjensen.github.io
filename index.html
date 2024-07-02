@@ -1,36 +1,179 @@
 <!DOCTYPE html>
-<html>
 <head>
-    <title>Random JSON Row</title>
+  <meta charset="utf-8">
+  <title>JSON table</title>
+  <style>
+    td { border: 1px solid black; padding: 10px; }
+  </style>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script>
+    window.json = [
+{"ID": 1, "Name": "Day for judgement", "Rule": "Destroy all creatures"},
+{"ID": 3, "Name": "Ancestral Recall", "Rule": "Draw 3 cards, skip your draw phase"},
+{"ID": 2, "Name": "Reminisce", "Rule": "Shuffle your graveyard into your library."},
+{"ID": 4, "Name": "Prosperity ", "Rule": "All players draw 1d6 cards."},
+{"ID": 5, "Name": "Demonic Tutor ", "Rule": "Search your library for a card and put it in your hand, then shuffle."},
+{"ID": 6, "Name": "Eureka ", "Rule": "Each player may put one permanent card from their hand onto the battlefield. Loss life equal to the converted mana cost"},
+{"ID": 7, "Name": "Exhume ", "Rule": "Each player puts a creature card from their graveyard onto the battlefield."},
+{"ID": 8, "Name": "tnahC smirO ", "Rule": "You can not cast spells this turn. If any player pays 5 life, your creatures can not attack this turn either."},
+{"ID": 9, "Name": "Better Off Dead ", "Rule": "Put a creature card from your graveyard onto the battlefield under target opponents control."},
+{"ID": 10, "Name": "eugitaF ", "Rule": "You can not draw cards this turn."},
+{"ID": 11, "Name": "Reins of Power ", "Rule": "Exchange control of all creatures you control and all creatures an opponent controls until end of turn. They gain haste until end of turn.\r\n"},
+{"ID": 12, "Name": "Crimson Hellflame ", "Rule": "You may pay 1 life many times as you like. Deal that much damage to target creature."},
+{"ID": 13, "Name": "Syphon Soul ", "Rule": "Deal 2 damage to each opponent and gain that much life."},
+{"ID": 14, "Name": "Shatter ", "Rule": "Destroy target artifact."},
+{"ID": 15, "Name": "Collective Unconscious ", "Rule": "Draw a card for each creature you control.\r\n"},
+{"ID": 16, "Name": "Lightning Helix ", "Rule": "Deal 3 damage to target creature or player. Gain 3 life. "},
+{"ID": 17, "Name": "Necrologia ", "Rule": "Pay 2 life and draw a card, as many times as you like. Skip your draw phase"},
+{"ID": 18, "Name": "Revenge is Sweet ", "Rule": "Sacrifice a permanent. If you do, destroy a permanent that shares a type with it."},
+{"ID": 19, "Name": "Pity ", "Rule": "If a player has less life than any other, that player gains 5 life."},
+{"ID": 20, "Name": "Chain Lightning ", "Rule": "Deal 3 damage to target creature or player. "},
+{"ID": 21, "Name": "Illicit Auction ", "Rule": "Each player may bid life for control of target creature, or a 3/3 Goblin token if there are no creatures. The bidding starts at 0 and proceeds in turn order. When no player wants to top the high bid, the high bidder loses that much life and gains control of the creature or the token.\r\n"},
+{"ID": 22, "Name": "Mind Control ", "Rule": "Get control of target creature."},
+{"ID": 23, "Name": "Life exchange", "Rule": "Exchange life with a random opponent."},
+{"ID": 24, "Name": "Rare-B-Gone ", "Rule": "Each player sacrifices a rare or mythic nonland permanent and gain life equal to its power."},
+{"ID": 25, "Name": "Sunblast Angel ", "Rule": "Destroy all tapped creatures."},
+{"ID": 26, "Name": "Hymn to Tourach ", "Rule": "Target player discards 2 cards at random."},
+{"ID": 27, "Name": "Exchange ", "Rule": "Exchange life with target opponent."},
+{"ID": 28, "Name": "Rick ", "Rule": "You got Rick rolled! Lose 5 life and sacrifice a creature."},
+{"ID": 29, "Name": "Cleanup ", "Rule": "Exile all cards in all graveyards."},
+{"ID": 30, "Name": "Ancest-roll Recall ", "Rule": "Put a 3/3 green wolf token into Target opponents battlefield.\r\n"},
+{"ID": 31, "Name": "Tremble ", "Rule": "Each player sacrifices a land."},
+{"ID": 32, "Name": "Confiscate ", "Rule": "Gain control of target permanent.\r\n"},
+{"ID": 33, "Name": "Reset", "Rule": "All players have 10 life.\r\n"},
+{"ID": 34, "Name": "Price of Immortality ", "Rule": "Discard a card. You gain 6 life."},
+{"ID": 35, "Name": "Giant Growth ", "Rule": "Roll 1d6. Target creature gets +X/+X until end of turn where X is the roll.\r\n"},
+{"ID": 36, "Name": "MindSlayer ", "Rule": "Gain control of target players next turn(including roll)."},
+{"ID": 37, "Name": "Regrowth ", "Rule": "Return target card from your graveyard to your hand. "},
+{"ID": 38, "Name": "rekeeS mrotS ", "Rule": "Take 1 damage for each card in your hand."},
+{"ID": 39, "Name": "Price of Strength ", "Rule": "Put two +1/+1 counters on each creature you control. You lose 4 life.\r\n"},
+{"ID": 40, "Name": "Possibility", "Rule": "You may sac. 2 lands to exile target permanent."},
+{"ID": 41, "Name": "Price of Power ", "Rule": "Sacrifice a land. Deal 4 damage to any target.\r\n"},
+{"ID": 42, "Name": "Backfire ", "Rule": "Target opponent draw 1 card, and you loss 2 life."},
+{"ID": 43, "Name": "Stronghold Discipline ", "Rule": "Each player loses 1 life for each creature they control."},
+{"ID": 44, "Name": "Topple ", "Rule": "Exile target creature with the greatest power among creatures on the battlefield.\r\n"},
+{"ID": 45, "Name": "Scar ", "Rule": "Put 1d6 -1/-1 counters on target creature."},
+{"ID": 46, "Name": "Meet in the Middle ", "Rule": "If you have more than 4 cards in hand, discard cards until you have 4. If you have less than 4 cards in hand, draw cards until you have 4.\r\n"},
+{"ID": 47, "Name": "Unearth ", "Rule": "Return a creature card with converted mana cost of 3 or less from your graveyard to the battlefield."},
+{"ID": 48, "Name": "Blue ", "Rule": "When you cast your next spell, counter it"},
+{"ID": 49, "Name": "Peach Garden Oath Revers ", "Rule": "You loss 2 life for each creature you control.\r\n"},
+{"ID": 50, "Name": "Unhinge ", "Rule": "Target player discards a card.You draw a card."},
+{"ID": 51, "Name": "Prey Upon ", "Rule": "Target creature you control fights target creature you dont control."},
+{"ID": 52, "Name": "Price of Support ", "Rule": "Sacrifice a creature, then put four 1/1 Spirit creature tokens with all colors onto the battlefield."},
+{"ID": 53, "Name": "Balloon ", "Rule": "Each time you tap a land for mana this turn, loss1 life."},
+{"ID": 54, "Name": "Tap ", "Rule": "Tap target permanent."},
+{"ID": 55, "Name": "Kill Walker ", "Rule": "Destroy target Planeswalker.\r\n"},
+{"ID": 56, "Name": "Power Surge ", "Rule": "Take 1 damage for each basic-land you control."},
+{"ID": 57, "Name": "Lurking Evil ", "Rule": "Put a 4/4 black Horror creature token with flying onto the battlefield. Loss 4 life"},
+{"ID": 58, "Name": "Blessed Wine ", "Rule": "Gain 1 life. Draw a card."},
+{"ID": 59, "Name": "Cloak of Mists ", "Rule": "Target creature becomes unblockable."},
+{"ID": 60, "Name": "Walker control ", "Rule": "Gain control of target Planeswalker: Rest counters to default."},
+{"ID": 61, "Name": "Time Walk ", "Rule": "Take an extra turn after this one. "},
+{"ID": 62, "Name": "Wanna Bet? ", "Rule": "Choose an opponent and a permanent they control. They choose a permanent you control. Flip a coin. The winner gains control of the losers permanent."},
+{"ID": 63, "Name": "Lat-Nams Legacy ", "Rule": "Shuffle a card from your hand into your library. Draw 1 card."},
+{"ID": 64, "Name": "AEther Snap ", "Rule": "Remove all counters from all creatures."},
+{"ID": 65, "Name": "Steal Artifact ", "Rule": "Gain control of target artifact.\r\n"},
+{"ID": 66, "Name": "Stasis ", "Rule": "All Players skip their untap steps. This effect stops for all when a player pays {5} or 5 life"},
+{"ID": 67, "Name": "Whale power", "Rule": "If you have 3 or less lands, put a 5/5 blue whale creature token into the battlefield under your control"},
+{"ID": 68, "Name": "Strongarm Tactics", "Rule": "Each player discards a card. Then each player who didnt discard a creature card this way loses 4 life."},
+{"ID": 69, "Name": "Leonin Sun Standard", "Rule": "Creatures you control get +1/+1 until end of turn"},
+{"ID": 70, "Name": "Psionic Blast", "Rule": "Deal 4 damage to target creature or player and 2 damage to you."},
+{"ID": 71, "Name": "Brain Pry", "Rule": "Name a nonland card. Target player reveals his or her hand. That player discards a card with that name. If he or she cant, you discard a card."},
+{"ID": 72, "Name": "Defender ", "Rule": "All your creatures get Defender until end of turn."},
+{"ID": 73, "Name": "Charge", "Rule": "All your creatures have to attack this turn if able."},
+{"ID": 74, "Name": "Ponder", "Rule": "Look at the top three cards of your library, then put them back in any order. You may shuffle your library."},
+{"ID": 75, "Name": "Footbottom Feast ", "Rule": "Put any number of creature cards from your graveyard on top of your library. Draw a card.\r\n"},
+{"ID": 76, "Name": "Last Rites ", "Rule": "Discard any number of cards from your hand. Look at target opponents hand and choose that many cards from it. That player discards those cards."},
+{"ID": 77, "Name": "Krosan Forest ", "Rule": "All players put 5 cards from the top of their libraries into their graveyards"},
+{"ID": 78, "Name": "Terminate ", "Rule": "Destroy target creature. It cant be regenerated"},
+{"ID": 79, "Name": "Direct damage", "Rule": "Deals X damage to each creature where X is the number of lands you tap."},
+{"ID": 80, "Name": "Cloudshift ", "Rule": "Exile Target creature you control, then return that creature to the battlefield under your control"},
+{"ID": 81, "Name": "Gale Force ", "Rule": "Deal 5 damage to each creature with flying"},
+{"ID": 82, "Name": "Storm Seeker ", "Rule": "Deal 1 damage to target player for each card in their hand."},
+{"ID": 83, "Name": "Mana Short ", "Rule": "Tap all lands you control.\r\n"},
+{"ID": 84, "Name": "Wonna be Black Lotus ", "Rule": "Add 3 colorless mana, can only be used to cast creatures in your next main step"},
+{"ID": 85, "Name": "Flying", "Rule": "All your creatures gain flying until end of turn."},
+{"ID": 86, "Name": "Time Crawl ", "Rule": "Pass the dice, your turn is over. "},
+{"ID": 87, "Name": "First ", "Rule": "Target Creature you control gains lifelink until end of turn."},
+{"ID": 88, "Name": "Temporal Spring ", "Rule": "Put target permanent on top of its owners library."},
+{"ID": 89, "Name": "Gamble ", "Rule": "Search your library for a card, put that card into your hand, then discard a card at random. Then shuffle your library.\r\n"},
+{"ID": 90, "Name": "Vindicate ", "Rule": "Destroy target permanent"},
+{"ID": 91, "Name": "Forget ", "Rule": "Target player discards 2 cards, then draws 2 cards.\r\n"},
+{"ID": 92, "Name": "Sleep ", "Rule": "Tap all creatures target player controls."},
+{"ID": 93, "Name": "Wheel of Fortune ", "Rule": "Each player discards their hand, then draws 7 cards."},
+{"ID": 94, "Name": "Second roll ", "Rule": "If you roll 1,2,3 draw a card, if 4,5,6 discard a card"},
+{"ID": 95, "Name": "Manabarbs ", "Rule": "Whenever a player taps a land for mana this turn, they take 1 damage.\r\n"},
+{"ID": 96, "Name": "Ill-Gotten Gains ", "Rule": "Each player discards their hand, then returns up to 3 cards from their graveyard to their hand."},
+{"ID": 97, "Name": "Flashback ", "Rule": "Target instant or sorcery in your graveyard gains flashback until end of turn. The cost is the spells converted mana cost"},
+{"ID": 98, "Name": "Price of Strength ", "Rule": "Put two +1/+1 counters on each creature you control. You lose 4 life."},
+{"ID": 99, "Name": "Boomerang ", "Rule": "Return target permanent to its owners hand."},
+{"ID": 100, "Name": "Retribution of the Meek ", "Rule": "Destroy all creatures with power 4 or greater."},
+{"ID": 101, "Name": "Next", "Rule": "Skip next players turn."},
+{"ID": 102, "Name": "Graveyard", "Rule": "Loss one life for each card in your graveyard. Max 5 life"},
+{"ID": 103, "Name": "New hand", "Rule": "Discard your hand, draw 7 cards. Skip your draw phase"},
+{"ID": 104, "Name": "Hideous End", "Rule": "Destroy target nonblack creature. Its controller loses 2 life."},
+{"ID": 105, "Name": "Haste", "Rule": "All creatures entering the battlefield this turn have haste."},
+{"ID": 106, "Name": "Thalia", "Rule": "Noncreature spells cost 1 colorless more to cast this turn"},
+{"ID": 107, "Name": "Extra lands", "Rule": "You may play 2 lands this turn"},
+{"ID": 108, "Name": "Squee", "Rule": "Your opponents play with their hands revealed, until they loss life."},
+{"ID": 109, "Name": "Clone", "Rule": "Put a token onto the battlefield that is a clone of any creature."},
+{"ID": 110, "Name": "Looting", "Rule": "Draw a card, then discard a card"},
+{"ID": 111, "Name": "Probe", "Rule": "Look at target opponent hand"},
+{"ID": 112, "Name": "Fog", "Rule": "All combat damage that would be dealt this turn is prevented."},
+{"ID": 113, "Name": "Goat land", "Rule": "All your lands becomes 1/1 white goat creatures until end of turn. They are still lands"},
+{"ID": 114, "Name": "Plummet", "Rule": "Destroy target creature with flying."},
+{"ID": 115, "Name": "Colorless lands", "Rule": "All your lands becomes colorless until end of turn."},
+{"ID": 116, "Name": "Zombify", "Rule": "Return target creature card from your graveyard to the battlefield."},
+{"ID": 117, "Name": "SingeMind Ogre", "Rule": "Target player reveals a card at random from his or her hand, then loses life equal to that cards converted mana cost.\r\n"},
+{"ID": 118, "Name": "Gain", "Rule": "You sacrifice a land,creature or artifact then draw a card."},
+{"ID": 119, "Name": "Frost Mana", "Rule": "All your creature have: Tap to Add one mana of any color to your mana pool. It doesnt untap during its controllers next untap step"},
+{"ID": 120, "Name": "No spells +1", "Rule": "If you dont play any spell this turn, put one +1/+1 counter on each of your creatures in your end step."},
+{"ID": 121, "Name": "No spell Clone", "Rule": "If you dont play any spell this turn, put a token onto your battlefield that is a copy of any creatures, in your end step."},
+{"ID": 122, "Name": "Serum Visions", "Rule": "Scry 2 (look at the top 2 cards of your library, put any number of them on the bottom of your library in any order, and put the rest on top of your library in any order)"},
+{"ID": 123, "Name": "Squirrel Nest", "Rule": "Tap all lands you control. Put X green 1/1 Squirrel tokens into play, where X is equal to the amount of lands you control."},
+{"ID": 124, "Name": "Meteor Storm", "Rule": "All creatures and players take 2 damage"},
+{"ID": 125, "Name": "Monstrous Growth", "Rule": "Put a +2/+2 counter on target creature"},
+{"ID": 126, "Name": "Jokulhaups", "Rule": "Destroy all artifacts, creatures and lands"},
+{"ID": 127, "Name": "Solid Fog", "Rule": "Until your next turn, no attack phases may be declared."},
+{"ID": 128, "Name": "Library of Tolaria", "Rule": "Any player may pay 4 life to draw a card."},
+{"ID": 129, "Name": "Mine Field", "Rule": "Any player may pay 6 life to destroy a creature"},
+{"ID": 130, "Name": "Battle cry", "Rule": "Target creature your control get Battle Cry until end of your turn.\r\n\r\nBattle Cry: When a creature with battle cry attacks, all other attacking creatures get +1/+0 until the end of the turn."},
+{"ID": 131, "Name": "3 Life", "Rule": "Chose one: Pay 3 life to destroy a creature, or gain 3 life and sacrifice a creature."},
+{"ID": 132, "Name": "Life perm", "Rule": "All players get life equal to the amount of permanents that player controls."},
+{"ID": 133, "Name": "Extra mana", "Rule": "All of your lands produce an additional mana of the appropriate type when tapped for mana this turn."},
+{"ID": 134, "Name": "Opponent library", "Rule": "Look at the top three cards of target opponent library, then put them back in any order. You may have that player shuffle his or her library."},
+{"ID": 135, "Name": "Intimidation", "Rule": "Until your next turn, you can not be attacked"},
+{"ID": 136, "Name": "Calm", "Rule": "There are no Chaos Phases until your next turn."},
+{"ID": 137, "Name": "Storm", "Rule": "Players roll two Chaos Rolls per turn, until the end of your next turn."},
+{"ID": 138, "Name": "Activation cost", "Rule": "You may pay the activation cost of any activated ability of any nonland permanent, until the end of your turn."},
+{"ID": 139, "Name": "Double ", "Rule": "Double all life gained or damage dealt after the Chaos Phase, until end of your turn"},
+{"ID": 140, "Name": "Master of Chaos", "Rule": "Until your next turn, you may choose all targets of Chaos Rolls"},
+{"ID": 141, "Name": "Elemental creature", "Rule": "Create two 3/1 red Elemental creature tokens with haste. Exile them at the beginning of the next end step."},
+{"ID": 142, "Name": "draw add mana", "Rule": "Draw a card, then add one mana of any color to your mana pool."},
+{"ID": 143, "Name": "10 life", "Rule": "Target players life total becomes 10."},
+{"ID": 144, "Name": "Poison", "Rule": "Rest of the game all creatures give damage as poison counters( 10 poison counters on yourself, you lose the game)"},
+{"ID": 145, "Name": "Tap all cards", "Rule": "Tap all your lands and creature cards, gain 1 life for each card tapped."},
+{"ID": 146, "Name": "Limit attack", "Rule": "You can only attack the player to the left of you until end of this turn"},
+{"ID": 147, "Name": "More tokens", "Rule": "For every creature attacking this turn, create that many 2/2 green wolf tokens onto that players battlefield."},
+{"ID": 148, "Name": "Destroy at random", "Rule": "Choose target nonland permanent you control and up to two target nonland permanents you dont control. Destroy one of them at random."},
+{"ID": 149, "Name": "Discard ", "Rule": "Discard your hand, get a x/x creature with haste where x is the number of cards you discarded this Way"},
+{"ID": 150, "Name": "Land pr not", "Rule": "You may play 2 lands this turn, if you can not all other players put a land onto the battlefield"}
+];
+  </script>
+  <script>
+    $(function() {
+      // Store the JSON in a variable named images for convenience
+      var images = window.json,
+          table = $('#table');
+      // Randomise array order
+      images.sort(function() { return 0.5 - Math.random() });
+      // Start the html string
+      var html = images[0].Rule;
+	  
+      table.html(html);
+    });
+  </script>
 </head>
 <body>
-    <script>
-        // Function to fetch the JSON file and return a random row
-        async function getRandomRow() {
-            try {
-                const response = await fetch('data.json');
-                const data = await response.json();
-                const randomIndex = Math.floor(Math.random() * data.length);
-                return data[randomIndex];
-            } catch (error) {
-                console.error('Error fetching or parsing JSON:', error);
-            }
-        }
-
-        console.log('test');
-
-        // Example usage
-        getRandomRow().then(randomRow => {
-            console.log('Random row:', randomRow);
-            test = randomRow;
-        });
-    </script>
-    
-<p id="demo"></p>
-
-<script>
-document.getElementById("demo").innerHTML = test;
-</script>
-    
+  <table id="table"></table>
 </body>
-</html>
