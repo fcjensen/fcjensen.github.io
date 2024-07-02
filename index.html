@@ -1,38 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Title</title>
+    <title>Random JSON Row</title>
 </head>
 <body>
-<div id="myData"></div>
-<script type="text/javascript">
-    fetch('data.json')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            appendData(data);
-        })
-        .catch(function (err) {
-            console.log('error: ' + err);
-        });
+    <script>
+        // Function to fetch the JSON file and return a random row
+        async function getRandomRow() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+                const randomIndex = Math.floor(Math.random() * data.length);
+                return data[randomIndex];
+            } catch (error) {
+                console.error('Error fetching or parsing JSON:', error);
+            }
+        }
 
-console.log(data);
-    
-//    function appendData(data) {
-//        let mainContainer = document.getElementById("myData");
-        
-//        for (let i = 0; i < data.length; i++) {
-//            let div = document.createElement("div");
-//            div.innerHTML = 'Rule: ' + data[i].ID + ' ' + data[i].Name + ' ' + data[i].Rule;
-//            mainContainer.appendChild(div);
-//        }
-//    }
-</script>
-    <button type="button" id="myData">Get random Rule</button>
-    <div id="myData"></div>
+        // Example usage
+        getRandomRow().then(randomRow => {
+            console.log('Random row:', randomRow);
+        });
+    </script>
 </body>
 </html>
