@@ -53,5 +53,8 @@
   {"ID": 52, "Name": "Pyroclasm", "Rule": "Destroy all creatures with power 2 or less."},
   {"ID": 53, "Name": "Shock", "Rule": "Deal 2 damage to target creature or player."},
   {"ID": 54, "Name": "Lightning Bolt", "Rule": "Deal 3 damage to target creature or player."},
-  {"ID": 55, "Name": "Fireball", "Rule": "Fireball deals 3 damage to target creature or player."}
+  {"ID": 55, "Name": "Fireball", "Rule": "Fireball deals 3 damage to target creature or player."},
+  {"ID": 56, "Name": "Life Lottery", "Rule": "Each player rolls a six-sided die. The player with the highest roll gains life equal to the total rolled by all players. The player with the lowest roll loses life equal to the total rolled by all players."},
+  {"ID": 57, "Name": "Spell Roulette", "Rule": "Each player casts a random instant or sorcery card from their hand without paying its mana cost."},
+  {"ID": 58, "Name": "Mana Overload", "Rule": "Each player adds 5 mana of any one color to their mana pool. This mana doesn't empty from their mana pool until the end of the turn."}
 ]
