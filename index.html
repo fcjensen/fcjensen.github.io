@@ -44,17 +44,6 @@
         button:hover {
             background-color: #9d66fc;
         }
-        button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-        }
-        #result { 
-            margin-top: 20px; 
-            padding: 15px; 
-            background-color: #1e1e1e; 
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
         #progress {
             width: 100%;
             height: 5px;
@@ -66,6 +55,13 @@
             height: 100%;
             background-color: #bb86fc;
             transition: width 4s linear;
+        }
+        #result { 
+            margin-top: 20px; 
+            padding: 15px; 
+            background-color: #1e1e1e; 
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -82,7 +78,6 @@
     <div id="result"></div>
 
     <script>
-        // Set up file selection links
         document.querySelectorAll('.file-selector a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -92,27 +87,17 @@
         });
 
         async function selectRandomCard() {
-            const button = document.querySelector('button');
             const progressBar = document.getElementById('progress-bar');
             const resultDiv = document.getElementById('result');
             const activeLink = document.querySelector('.file-selector a.active');
             const selectedFile = activeLink.getAttribute('data-file');
 
-            // Disable button and reset progress
-            button.disabled = true;
-            progressBar.style.width = '0%';
-
             // Trigger progress bar
-            setTimeout(() => {
-                progressBar.style.width = '100%';
-            }, 50);
+            progressBar.style.width = '100%';
 
             try {
                 const response = await fetch(selectedFile);
                 const cards = await response.json();
-                
-                // Wait for progress bar to complete
-                await new Promise(resolve => setTimeout(resolve, 4000));
                 
                 const randomIndex = Math.floor(Math.random() * cards.length);
                 const selectedCard = cards[randomIndex];
@@ -125,9 +110,10 @@
             } catch (error) {
                 resultDiv.textContent = `Error: ${error.message}`;
             } finally {
-                // Re-enable button and reset progress bar
-                button.disabled = false;
-                progressBar.style.width = '0%';
+                // Reset progress bar
+                setTimeout(() => {
+                    progressBar.style.width = '0%';
+                }, 4000);
             }
         }
     </script>
