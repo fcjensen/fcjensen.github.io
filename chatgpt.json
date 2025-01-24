@@ -1,0 +1,12 @@
+[
+  {"ID": 1, "Name": "Day for Judgement", "Rule": "Destroy all creatures."},
+  {"ID": 2, "Name": "Ancestral Recall", "Rule": "Draw 3 cards. Skip your next draw phase."},
+  {"ID": 3, "Name": "Reminisce", "Rule": "Shuffle your graveyard into your library."},
+  {"ID": 4, "Name": "Prosperity", "Rule": "All players draw 1d6 cards."},
+  {"ID": 5, "Name": "Demonic Tutor", "Rule": "Search your library for a card and put it in your hand, then shuffle."},
+  {"ID": 6, "Name": "Eureka", "Rule": "Each player may put one permanent card from their hand onto the battlefield. Lose life equal to its mana cost."},
+  {"ID": 7, "Name": "Exhume", "Rule": "Each player puts a creature card from their graveyard onto the battlefield."},
+  {"ID": 8, "Name": "Wildfire Roulette", "Rule": "Each player chooses a random creature they control. Sacrifice the chosen creatures."},
+  {"ID": 9, "Name": "Better Off Dead", "Rule": "Put a creature card from your graveyard onto the battlefield under target opponent’s control."},
+  {"ID": 10, "Name": "Equalize", "Rule": "The player with the highest life total loses 10 life. The player with the lowest life total gains 10 life."}
+]
