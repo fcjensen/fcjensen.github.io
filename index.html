@@ -2,46 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Random Item Selector</title>
+    <title>Magic Card Selector</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 600px; 
+            margin: 20px auto; 
+            text-align: center; 
         }
-        #result {
-            margin-top: 20px;
-            font-size: 1.2em;
-            font-weight: bold;
+        #result { 
+            margin-top: 20px; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
         }
-        button {
-            padding: 10px 20px;
-            font-size: 1em;
+        button { 
+            padding: 10px 20px; 
+            font-size: 1em; 
         }
     </style>
 </head>
 <body>
-    <h1>Random Item Selector</h1>
-    <button onclick="selectRandomItem()">Select Random Item</button>
+    <h1>Random Magic Card Selector</h1>
+    <button onclick="selectRandomCard()">Draw Random Card</button>
     <div id="result"></div>
 
     <script>
-        const items = [
-            {"name": "Apple", "color": "Red"},
-            {"name": "Banana", "color": "Yellow"},
-            {"name": "Orange", "color": "Orange"},
-            {"name": "Grape", "color": "Purple"},
-            {"name": "Strawberry", "color": "Pink"}
-        ];
-
-        function selectRandomItem() {
-            const randomIndex = Math.floor(Math.random() * items.length);
-            const selectedItem = items[randomIndex];
-
-            document.getElementById('result').textContent = 
-                `Selected Item: ${JSON.stringify(selectedItem, null, 2)}`;
+        async function selectRandomCard() {
+            try {
+                const response = await fetch('data.json');
+                const cards = await response.json();
+                
+                const randomIndex = Math.floor(Math.random() * cards.length);
+                const selectedCard = cards[randomIndex];
+                
+                document.getElementById('result').innerHTML = `
+                    <strong>Card Name:</strong> ${selectedCard.Name}<br>
+                    <strong>ID:</strong> ${selectedCard.ID}<br>
+                    <strong>Rule:</strong> ${selectedCard.Rule}
+                `;
+            } catch (error) {
+                document.getElementById('result').textContent = 
+                    `Error: ${error.message}`;
+            }
         }
     </script>
 </body>
