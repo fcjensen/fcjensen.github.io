@@ -18,6 +18,19 @@
             border-bottom: 2px solid #bb86fc;
             padding-bottom: 10px;
         }
+        .file-selector {
+            margin-bottom: 15px;
+        }
+        .file-selector a {
+            color: #03dac6;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        .file-selector a.active {
+            color: #bb86fc;
+            text-decoration: underline;
+        }
         button { 
             background-color: #bb86fc;
             color: #121212;
@@ -57,7 +70,11 @@
     </style>
 </head>
 <body>
-    <h1>Random Magic Card Selector</h1>
+    <h1>Random Card Selector</h1>
+    <div class="file-selector">
+        <a href="#" class="active" data-file="data.json">Data JSON</a>
+        <a href="#" data-file="chatgpt.json">ChatGPT JSON</a>
+    </div>
     <button onclick="selectRandomCard()">Draw Random Card</button>
     <div id="progress">
         <div id="progress-bar"></div>
@@ -65,10 +82,21 @@
     <div id="result"></div>
 
     <script>
+        // Set up file selection links
+        document.querySelectorAll('.file-selector a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.file-selector a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
         async function selectRandomCard() {
             const button = document.querySelector('button');
             const progressBar = document.getElementById('progress-bar');
             const resultDiv = document.getElementById('result');
+            const activeLink = document.querySelector('.file-selector a.active');
+            const selectedFile = activeLink.getAttribute('data-file');
 
             // Disable button and reset progress
             button.disabled = true;
@@ -80,7 +108,7 @@
             }, 50);
 
             try {
-                const response = await fetch('data.json');
+                const response = await fetch(selectedFile);
                 const cards = await response.json();
                 
                 // Wait for progress bar to complete
