@@ -31,6 +31,10 @@
         button:hover {
             background-color: #9d66fc;
         }
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
         #result { 
             margin-top: 20px; 
             padding: 15px; 
@@ -38,30 +42,64 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
+        #progress {
+            width: 100%;
+            height: 5px;
+            background-color: #1e1e1e;
+            margin-top: 15px;
+        }
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #bb86fc;
+            transition: width 4s linear;
+        }
     </style>
 </head>
 <body>
     <h1>Random Magic Card Selector</h1>
     <button onclick="selectRandomCard()">Draw Random Card</button>
+    <div id="progress">
+        <div id="progress-bar"></div>
+    </div>
     <div id="result"></div>
 
     <script>
         async function selectRandomCard() {
+            const button = document.querySelector('button');
+            const progressBar = document.getElementById('progress-bar');
+            const resultDiv = document.getElementById('result');
+
+            // Disable button and reset progress
+            button.disabled = true;
+            progressBar.style.width = '0%';
+
+            // Trigger progress bar
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 50);
+
             try {
                 const response = await fetch('data.json');
                 const cards = await response.json();
                 
+                // Wait for progress bar to complete
+                await new Promise(resolve => setTimeout(resolve, 4000));
+                
                 const randomIndex = Math.floor(Math.random() * cards.length);
                 const selectedCard = cards[randomIndex];
                 
-                document.getElementById('result').innerHTML = `
+                resultDiv.innerHTML = `
                     <strong style="color: #bb86fc;">Card Name:</strong> ${selectedCard.Name}<br>
                     <strong style="color: #03dac6;">ID:</strong> ${selectedCard.ID}<br>
                     <strong style="color: #03dac6;">Rule:</strong> ${selectedCard.Rule}
                 `;
             } catch (error) {
-                document.getElementById('result').textContent = 
-                    `Error: ${error.message}`;
+                resultDiv.textContent = `Error: ${error.message}`;
+            } finally {
+                // Re-enable button and reset progress bar
+                button.disabled = false;
+                progressBar.style.width = '0%';
             }
         }
     </script>
