@@ -87,7 +87,7 @@
                 this.classList.add('active');
             });
         });
-
+/*
         function resetProgressBar() {
             progressBar.style.transition = 'none';
             progressBar.style.width = '0%';
@@ -97,7 +97,7 @@
             
             progressBar.style.transition = 'width 4s linear';
         }
-
+*/
         async function selectRandomCard() {
             const resultDiv = document.getElementById('result');
             const activeLink = document.querySelector('.file-selector a.active');
@@ -119,14 +119,14 @@
                 resultDiv.innerHTML = `
                     <strong style="color: #bb86fc;">Card Name:</strong> ${selectedCard.Name}<br>
                     <strong style="color: #03dac6;">ID:</strong> ${selectedCard.ID}<br>
-                    <strong style="color: #03dac6;">Rule:</strong> ${selectedCard.Rule}
+                    <strong style="color: #03dac6;" style="font-size: 4rem;">Rule:</strong> ${selectedCard.Rule}
                 `;
             } catch (error) {
                 resultDiv.textContent = `Error: ${error.message}`;
             }
 
             // Reset progress bar when it reaches the end
-            setTimeout(resetProgressBar, 4000);
+            /*setTimeout(resetProgressBar, 4000);*/
         }
     </script>
 </body>
