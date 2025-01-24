@@ -5,19 +5,38 @@
     <title>Magic Card Selector</title>
     <style>
         body { 
-            font-family: Arial, sans-serif; 
+            font-family: 'Trebuchet MS', sans-serif; 
+            background-color: #121212; 
+            color: #e0e0e0;
             max-width: 600px; 
             margin: 20px auto; 
             text-align: center; 
+            line-height: 1.6;
+        }
+        h1 {
+            color: #bb86fc;
+            border-bottom: 2px solid #bb86fc;
+            padding-bottom: 10px;
+        }
+        button { 
+            background-color: #bb86fc;
+            color: #121212;
+            border: none;
+            padding: 12px 24px; 
+            font-size: 1em; 
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #9d66fc;
         }
         #result { 
             margin-top: 20px; 
-            padding: 10px; 
-            border: 1px solid #ccc; 
-        }
-        button { 
-            padding: 10px 20px; 
-            font-size: 1em; 
+            padding: 15px; 
+            background-color: #1e1e1e; 
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -36,9 +55,9 @@
                 const selectedCard = cards[randomIndex];
                 
                 document.getElementById('result').innerHTML = `
-                    <strong>Card Name:</strong> ${selectedCard.Name}<br>
-                    <strong>ID:</strong> ${selectedCard.ID}<br>
-                    <strong>Rule:</strong> ${selectedCard.Rule}
+                    <strong style="color: #bb86fc;">Card Name:</strong> ${selectedCard.Name}<br>
+                    <strong style="color: #03dac6;">ID:</strong> ${selectedCard.ID}<br>
+                    <strong style="color: #03dac6;">Rule:</strong> ${selectedCard.Rule}
                 `;
             } catch (error) {
                 document.getElementById('result').textContent = 
