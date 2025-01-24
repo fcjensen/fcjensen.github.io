@@ -54,7 +54,7 @@
             width: 0%;
             height: 100%;
             background-color: #bb86fc;
-            transition: width 4s linear;
+            transition: width 0.3s linear;
         }
         #result { 
             margin-top: 20px; 
@@ -78,6 +78,8 @@
     <div id="result"></div>
 
     <script>
+        const progressBar = document.getElementById('progress-bar');
+
         document.querySelectorAll('.file-selector a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -86,11 +88,23 @@
             });
         });
 
+        function resetProgressBar() {
+            progressBar.style.transition = 'none';
+            progressBar.style.width = '0%';
+            
+            // Force reflow to ensure reset happens before transition
+            void progressBar.offsetWidth;
+            
+            progressBar.style.transition = 'width 4s linear';
+        }
+
         async function selectRandomCard() {
-            const progressBar = document.getElementById('progress-bar');
             const resultDiv = document.getElementById('result');
             const activeLink = document.querySelector('.file-selector a.active');
             const selectedFile = activeLink.getAttribute('data-file');
+
+            // Reset progress bar immediately
+            resetProgressBar();
 
             // Trigger progress bar
             progressBar.style.width = '100%';
@@ -109,12 +123,10 @@
                 `;
             } catch (error) {
                 resultDiv.textContent = `Error: ${error.message}`;
-            } finally {
-                // Reset progress bar
-                setTimeout(() => {
-                    progressBar.style.width = '0%';
-                }, 4000);
             }
+
+            // Reset progress bar when it reaches the end
+            setTimeout(resetProgressBar, 4000);
         }
     </script>
 </body>
