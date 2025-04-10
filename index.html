@@ -71,7 +71,7 @@
         <a href="#" class="active" data-file="data.json">Data JSON</a>
         <a href="#" data-file="chatgpt.json">ChatGPT JSON</a>
 
-        <label for="powercardToggle">Enable Powercard</label>
+        <label for="powercardToggle">Enable Powercard(7%)</label>
         <input type="checkbox" id="powercardToggle" />
     </div>
 
@@ -141,8 +141,8 @@
                     //Powercard logic
                     const randomChance = Math.random();
                     
-                    // Add a 1 in 10 chance to display "Get a Random PowerCard!"
-                    if (randomChance < 0.1) {
+                    // 7% chance to display "Get a Random PowerCard!"
+                    if (randomChance < 0.07) {
                         resultDiv.innerHTML = `
                             <strong style="color: #ff9800;">Get a Random PowerCard!</strong>
                         `;
