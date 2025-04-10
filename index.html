@@ -71,6 +71,10 @@
         <a href="#" class="active" data-file="data.json">Data JSON</a>
         <a href="#" data-file="chatgpt.json">ChatGPT JSON</a>
     </div>
+    <div>
+        <label for="powercardToggle">Enable Powercard Logic:</label>
+        <input type="checkbox" id="powercardToggle" />
+    </div>
     <button onclick="selectRandomCard()">Draw Random Card</button>
     <div id="progress">
         <div id="progress-bar"></div>
@@ -78,6 +82,28 @@
     <div id="result"></div>
 
     <script>
+        //PowerCard selection true/false logic START
+        document.addEventListener('DOMContentLoaded', function () {
+            const powercardToggle = document.getElementById('powercardToggle');
+        
+            // Check if the logic should be enabled (you can persist this value in localStorage or via server-side logic)
+            const isPowercardEnabled = localStorage.getItem('powercardEnabled') === 'true';
+        
+            powercardToggle.checked = isPowercardEnabled;
+        
+            powercardToggle.addEventListener('change', function () {
+              const enabled = powercardToggle.checked;
+              localStorage.setItem('powercardEnabled', enabled);
+              if (enabled) {
+                console.log('Powercard Logic Enabled');
+                // Add your logic to enable powercard
+              } else {
+                console.log('Powercard Logic Disabled');
+                // Add your logic to disable powercard
+              }
+            });
+          });
+        
         const progressBar = document.getElementById('progress-bar');
 
         document.querySelectorAll('.file-selector a').forEach(link => {
@@ -110,15 +136,17 @@
             progressBar.style.width = '100%';
 
             try {
-                //Powercard logic
-                const randomChance = Math.random();
-                
-                // Add a 1 in 10 chance to display "Get a Random PowerCard!"
-                if (randomChance < 0.1) {
-                    resultDiv.innerHTML = `
-                        <strong style="color: #ff9800;">Get a Random PowerCard!</strong>
-                    `;
-                    return;
+                if (localStorage.getItem('powercardEnabled') === 'true') {
+                    //Powercard logic
+                    const randomChance = Math.random();
+                    
+                    // Add a 1 in 10 chance to display "Get a Random PowerCard!"
+                    if (randomChance < 0.1) {
+                        resultDiv.innerHTML = `
+                            <strong style="color: #ff9800;">Get a Random PowerCard!</strong>
+                        `;
+                        return;
+                    }
                 }
                 
                 const response = await fetch(selectedFile);
