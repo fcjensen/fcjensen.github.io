@@ -149,5 +149,7 @@
 {"ID": 148, "Name": "Destroy at random", "Rule": "Choose target nonland permanent you control and up to two target nonland permanents you dont control. Destroy one of them at random."},
 {"ID": 149, "Name": "Discard ", "Rule": "Discard your hand, get a x/x creature with haste where x is the number of cards you discarded this Way"},
 {"ID": 150, "Name": "Land pr not", "Rule": "You may play 2 lands this turn, if you can not all other players put a land onto the battlefield"},
-{"ID": 197, "Name": "Goblin Science", "Rule": "Create a 1/1 red Goblin token. Roll a d6. On 6, it explodes and deals 4 damage to target creature."}
+{"ID": 197, "Name": "Goblin Science", "Rule": "Create a 1/1 red Goblin token. Roll a d6. On 6, it explodes and deals 4 damage to target creature."},
+{"ID": 198, "Name": "Left Or Right", "Rule": "The Player to your left loss 1 life, the player to your right gain 1 life. If not possible reroll"}  
+  
 ]
