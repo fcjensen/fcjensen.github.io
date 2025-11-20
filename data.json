@@ -150,6 +150,15 @@
 {"ID": 149, "Name": "Discard ", "Rule": "Discard your hand, get a x/x creature with haste where x is the number of cards you discarded this Way"},
 {"ID": 150, "Name": "Land pr not", "Rule": "You may play 2 lands this turn, if you can not all other players put a land onto the battlefield"},
 {"ID": 197, "Name": "Goblin Science", "Rule": "Create a 1/1 red Goblin token. Roll a d6. On 6, it explodes and deals 4 damage to target creature."},
-{"ID": 198, "Name": "Left Or Right", "Rule": "The Player to your left loss 1 life, the player to your right gain 1 life. If not possible reroll"}  
-  
+{"ID": 198, "Name": "Left Or Right", "Rule": "The Player to your left loss 1 life, the player to your right gain 1 life. If not possible reroll"},
+{"ID": 199, "Name": "Necromancer's Gift", "Rule": "Players controlling a Swamp may return a creature card from their graveyard to their hand."},
+{"ID": 200, "Name": "Dread Harvest", "Rule": "Players controlling a Swamp exile two cards from their graveyard."},
+{"ID": 201, "Name": "Tidal Drown", "Rule": "Players controlling an Island return one permanent they own to their hand."},
+{"ID": 202, "Name": "Deep Insight", "Rule": "Players controlling an Island draw 1 card."},  
+{"ID": 203, "Name": "Burn the Weak", "Rule": "Players controlling a Mountain must sacrifice a creature with power 1 or 2 if able."},  
+{"ID": 204, "Name": "Frenzy Ignition", "Rule": "Players controlling a Mountain create a free Shock effect (2 damage to any target)."},  
+{"ID": 205, "Name": "Ramp Renewal", "Rule": "Players controlling a Forest search for a basic land and put it onto the battlefield tapped."},  
+{"ID": 206, "Name": "Entangling Roots", "Rule": "Players controlling a Forest tap one of thier own creatures; it doesn’t untap during their next untap step."},  
+{"ID": 207, "Name": "Purifying Wave", "Rule": "Players controlling a Plains sacrifice an enchantment if able."},  
+{"ID": 208, "Name": "Healing Light", "Rule": "Players controlling a Plains gain 2 life."}
 ]
