@@ -69,7 +69,6 @@
 {"ID": 68, "Name": "Strongarm Tactics", "Rule": "Each player discards a card. Then each player who didnt discard a creature card this way loses 4 life."},
 {"ID": 69, "Name": "Leonin Sun Standard", "Rule": "Creatures you control get +1/+1 until end of turn"},
 {"ID": 70, "Name": "Psionic Blast", "Rule": "Deal 4 damage to target creature or player and 2 damage to you."},
-{"ID": 71, "Name": "Brain Pry", "Rule": "Name a nonland card. Target player reveals his or her hand. That player discards a card with that name. If he or she cant, you discard a card."},
 {"ID": 72, "Name": "Defender ", "Rule": "All your creatures get Defender until end of turn."},
 {"ID": 73, "Name": "Charge", "Rule": "All your creatures have to attack this turn if able."},
 {"ID": 74, "Name": "Ponder", "Rule": "Look at the top three cards of your library, then put them back in any order. You may shuffle your library."},
