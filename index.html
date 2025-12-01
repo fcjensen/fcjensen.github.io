@@ -63,19 +63,53 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
+		#historyBox {
+			margin-top: 25px;
+			background-color: #1e1e1e;
+			padding: 15px;
+			border-radius: 8px;
+		}
+
+		#historyBox h2 {
+			color: #bb86fc;
+			margin: 0 0 10px 0;
+			border-bottom: 1px solid #bb86fc;
+			padding-bottom: 5px;
+		}
+
+		#historyList {
+			list-style: none;
+			max-height: 250px;
+			overflow-y: auto;
+			padding-left: 0;
+		}
+
+		#historyList li {
+			padding: 6px 0;
+			border-bottom: 1px solid #333;
+			color: #e0e0e0;
+		}
+		#historyBoxWrapper {
+			overflow: hidden;
+			transition: max-height 0.4s ease;
+			max-height: 500px; /* expanded height */
+		}
+
+		#historyBoxWrapper.collapsed {
+			max-height: 0;
+		}		
     </style>
 </head>
 <body>
     <h1>Random Card Selector</h1>
     <div class="file-selector">
-        <a href="#" class="active" data-file="data.json">Data JSON</a>
-        <a href="#" data-file="chatgpt.json">ChatGPT JSON</a>
+        <a href="#" class="active" data-file="./data.json">Data JSON</a>
+        <a href="#" data-file="./chatgpt.json">ChatGPT JSON</a>
 
-        <label for="powercardToggle">Enable Powercard(5%)</label>
+        <label for="powercardToggle">Enable Powercard</label>
         <input type="checkbox" id="powercardToggle" />
     </div>
-
-
+	
     <button onclick="selectRandomCard()">Draw Random Card</button>
     <div id="progress">
         <div id="progress-bar"></div>
@@ -124,6 +158,69 @@
             
             progressBar.style.transition = 'width 4s linear';
         }
+		
+		// Store last 30 used rule IDs
+		function getHistory() {
+			return JSON.parse(localStorage.getItem("last30Rules") || "[]");
+		}
+
+		function saveHistory(history) {
+			localStorage.setItem("last30Rules", JSON.stringify(history));
+		}
+
+		function addToHistory(id) {
+			let history = getHistory();
+			history.push(id);
+
+			// Keep only the last 30
+			if (history.length > 30) {
+				history = history.slice(history.length - 30);
+			}
+
+			saveHistory(history);
+		}		
+		
+function updateHistoryUI(cards) {
+    const list = document.getElementById("historyList");
+    list.innerHTML = "";
+
+    let history = getHistory();
+
+    // Show newest first
+    history = history.slice().reverse();
+
+    history.forEach(id => {
+        const card = cards.find(c => c.ID === id);
+        if (card) {
+            const li = document.createElement("li");
+            li.textContent = card.Name;
+            list.appendChild(li);
+        }
+    });
+}		
+
+// Toggle collapse/expand history box
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleBtn = document.getElementById("toggleHistoryBtn");
+    const wrapper = document.getElementById("historyBoxWrapper");
+
+    // Load saved preference
+    const isCollapsed = localStorage.getItem("historyCollapsed") === "true";
+    if (isCollapsed) {
+        wrapper.classList.add("collapsed");
+        toggleBtn.textContent = "Show History";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+        wrapper.classList.toggle("collapsed");
+
+        const nowCollapsed = wrapper.classList.contains("collapsed");
+        localStorage.setItem("historyCollapsed", nowCollapsed);
+
+        toggleBtn.textContent = nowCollapsed ? "Show History" : "Hide History";
+    });
+});
+
 
         async function selectRandomCard() {
             const resultDiv = document.getElementById('result');
@@ -141,8 +238,8 @@
                     //Powercard logic
                     const randomChance = Math.random();
                     
-                    // 5% chance to display "Get a Random PowerCard!"
-                    if (randomChance < 0.05) {
+                    // 3% chance to display "Get a Random PowerCard!"
+                    if (randomChance < 0.03) {
                         resultDiv.innerHTML = `
                             <strong style="color: #ff9800;">Get a Random PowerCard!</strong>
                         `;
@@ -153,8 +250,25 @@
                 const response = await fetch(selectedFile);
                 const cards = await response.json();
                 
-                const randomIndex = Math.floor(Math.random() * cards.length);
-                const selectedCard = cards[randomIndex];
+				// Prevent repeats in last 30 draws
+				let history = getHistory();
+
+				let availableCards = cards.filter(card => !history.includes(card.ID));
+
+				// If all cards are used, reset history (failsafe)
+				if (availableCards.length === 0) {
+					availableCards = cards;
+					history = [];
+					saveHistory(history);
+				}
+
+				const randomIndex = Math.floor(Math.random() * availableCards.length);
+				const selectedCard = availableCards[randomIndex];
+
+				// Add to history
+				addToHistory(selectedCard.ID);
+				
+				updateHistoryUI(cards);
                 
                 resultDiv.innerHTML = `
                     <strong style="color: #bb86fc;">Card Name:</strong> ${selectedCard.Name}<br>
@@ -179,5 +293,12 @@
             //setTimeout(resetProgressBar, 4000);
         }
     </script>
+		<button id="toggleHistoryBtn" style="margin-top:20px;">Hide History</button>
+		<div id="historyBoxWrapper">
+			<div id="historyBox">
+				<h2>Last 30 Rules</h2>
+				<ul id="historyList"></ul>
+			</div>
+		</div>	
 </body>
 </html>
