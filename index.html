@@ -236,10 +236,10 @@ document.addEventListener('DOMContentLoaded', function () {
             try {
                 if (localStorage.getItem('powercardEnabled') === 'true') {
                     //Powercard logic
-                    const randomChance = Math.random();
+					const randomChance = Math.floor(Math.random()*100);
                     
-                    // 3% chance to display "Get a Random PowerCard!"
-                    if (randomChance < 0.03) {
+                    // 4% chance to display "Get a Random PowerCard!"
+                    if (randomChance < 4) {
                         resultDiv.innerHTML = `
                             <strong style="color: #ff9800;">Get a Random PowerCard!</strong>
                         `;
