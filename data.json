@@ -141,7 +141,6 @@
 {"ID": 141, "Name": "Elemental creature", "Rule": "Create two 3/1 red Elemental creature tokens with haste. Exile them at the beginning of the next end step."},
 {"ID": 142, "Name": "draw add mana", "Rule": "Draw a card, then add one mana of any color to your mana pool."},
 {"ID": 143, "Name": "10 life", "Rule": "Target players life total becomes 10."},
-{"ID": 144, "Name": "Poison", "Rule": "Rest of the game all creatures give damage as poison counters( 10 poison counters on yourself, you lose the game)"},
 {"ID": 145, "Name": "Tap all cards", "Rule": "Tap all your lands and creature cards, gain 1 life for each card tapped."},
 {"ID": 146, "Name": "Limit attack", "Rule": "You can only attack the player to the left of you until end of this turn"},
 {"ID": 147, "Name": "More tokens", "Rule": "For every creature attacking this turn, create that many 2/2 green wolf tokens onto that players battlefield."},
