@@ -173,8 +173,8 @@
 			history.push(id);
 
 			// Keep only the last 30
-			if (history.length > 30) {
-				history = history.slice(history.length - 30);
+			if (history.length > 50) {
+				history = history.slice(history.length - 50);
 			}
 
 			saveHistory(history);
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		<button id="toggleHistoryBtn" style="margin-top:20px;">Hide History</button>
 		<div id="historyBoxWrapper">
 			<div id="historyBox">
-				<h2>Last 30 Rules</h2>
+				<h2>Last Rules</h2>
 				<ul id="historyList"></ul>
 			</div>
 		</div>	
