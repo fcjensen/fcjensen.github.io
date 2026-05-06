@@ -1,1 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MTG Chaos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+        :root {
+            --gold: #c9a84c;
+            --gold-light: #e8c96a;
+            --gold-dim: #8a6f35;
+            --dark-bg: #0d0d0d;
+            --card-bg: #111111;
+            --card-border: #2a2015;
+            --text-primary: #e8dcc8;
+            --text-dim: #7a6f60;
+            --red-accent: #8b2020;
+            --red-glow: rgba(139,32,32,0.4);
+            --persistent-color: #c9a84c;
+        }
+
+        body {
+            font-family: 'Crimson Text', Georgia, serif;
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 60%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%230d0d0d'/%3E%3Crect width='1' height='1' fill='%23111' opacity='0.5'/%3E%3C/svg%3E");
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px 60px;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .header-eyebrow {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.35em;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+        .header-eyebrow::before, .header-eyebrow::after {
+            content: '✦';
+            color: var(--gold-dim);
+            font-size: 0.5rem;
+        }
+
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            font-size: clamp(4rem, 12vw, 6rem);
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            line-height: 1;
+            text-shadow: 0 0 60px rgba(201,168,76,0.3), 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .header-sub {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            color: var(--text-dim);
+            margin-top: 8px;
+        }
+
+        /* ── COUNTER ── */
+        .counter {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .counter-num {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .counter-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.25em;
+            color: var(--text-dim);
+        }
+        .counter-bar {
+            width: 200px;
+            height: 2px;
+            background: #222;
+            margin: 8px auto 0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .counter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+            transition: width 0.5s ease;
+            border-radius: 2px;
+        }
+
+        /* ── CARD FRAME ── */
+        .card-frame {
+            width: 100%;
+            max-width: 640px;
+            position: relative;
+            margin-bottom: 36px;
+        }
+
+        .card-inner {
+            background: linear-gradient(160deg, #161210 0%, #0f0d0b 100%);
+            border: 1px solid #2e2416;
+            border-radius: 8px;
+            padding: 32px 36px 36px;
+            position: relative;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow:
+                0 0 0 1px #1a1208,
+                inset 0 0 60px rgba(0,0,0,0.5),
+                0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        /* Red glow border variant */
+        .card-inner.has-card {
+            border-color: var(--red-accent);
+            box-shadow:
+                0 0 0 1px #1a1208,
+                0 0 30px var(--red-glow),
+                inset 0 0 60px rgba(0,0,0,0.5),
+                0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        /* Corner ornaments */
+        .corner {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            color: var(--gold-dim);
+            font-size: 10px;
+        }
+        .corner-tl { top: 10px; left: 12px; }
+        .corner-tr { top: 10px; right: 12px; text-align: right; }
+        .corner-bl { bottom: 10px; left: 12px; }
+        .corner-br { bottom: 10px; right: 12px; text-align: right; }
+
+        /* Card header row */
+        .card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .tag {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid currentColor;
+            text-transform: uppercase;
+        }
+        .tag-life     { color: #c9453a; border-color: #6b1f1f; background: rgba(139,32,32,0.2); }
+        .tag-mana     { color: #4a90c9; border-color: #1f3f6b; background: rgba(32,70,139,0.2); }
+        .tag-combat   { color: #c97a4a; border-color: #6b3f1f; background: rgba(139,70,32,0.2); }
+        .tag-spell    { color: #9a4ac9; border-color: #4f1f6b; background: rgba(100,32,139,0.2); }
+        .tag-creature { color: #4ac97a; border-color: #1f6b3f; background: rgba(32,139,70,0.2); }
+        .tag-wild     { color: #c9c94a; border-color: #6b6b1f; background: rgba(139,139,32,0.2); }
+        .tag-default  { color: var(--gold-dim); border-color: #3a2e10; background: rgba(80,60,20,0.2); }
+
+        .persistent-badge {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .persistent-badge::before { content: '∞'; font-size: 1rem; }
+
+        /* Card rule text */
+        .card-rule {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.35rem;
+            font-style: italic;
+            line-height: 1.55;
+            color: var(--text-primary);
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .card-divider {
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+            margin: 20px auto 0;
+        }
+
+        .card-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: var(--gold-dim);
+            text-align: center;
+            margin-top: 14px;
+        }
+
+        /* Empty state */
+        .card-empty {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: var(--text-dim);
+            text-align: center;
+        }
+
+        /* ── BUTTONS ── */
+        .btn-draw {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            background: linear-gradient(135deg, #c9a84c 0%, #e8c96a 50%, #c9a84c 100%);
+            background-size: 200% 100%;
+            color: #0d0d0d;
+            border: none;
+            padding: 18px 64px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-position 0.4s ease, transform 0.15s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 20px rgba(201,168,76,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-draw:hover {
+            background-position: 100% 0;
+            box-shadow: 0 6px 30px rgba(201,168,76,0.5);
+            transform: translateY(-1px);
+        }
+        .btn-draw:active { transform: translateY(0); }
+        .btn-draw .star { font-size: 1rem; }
+
+        .btn-reset {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.25em;
+            color: var(--text-dim);
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .btn-reset:hover { color: var(--text-primary); }
+        .btn-reset::before { content: '↺'; font-size: 0.85rem; }
+
+        /* ── POWERCARD TOGGLE ── */
+        .powercard-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            color: var(--text-dim);
+            margin-top: 12px;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 36px;
+            height: 20px;
+        }
+        .toggle-switch input { display: none; }
+        .toggle-track {
+            position: absolute;
+            inset: 0;
+            background: #222;
+            border: 1px solid #333;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .toggle-thumb {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: var(--text-dim);
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.2s, background 0.2s;
+        }
+        .toggle-switch input:checked ~ .toggle-track { background: rgba(201,168,76,0.2); border-color: var(--gold-dim); }
+        .toggle-switch input:checked ~ .toggle-track .toggle-thumb { left: 18px; background: var(--gold); }
+
+        /* File selector */
+        .file-selector {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+        .file-selector a {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            color: var(--text-dim);
+            text-decoration: none;
+            padding-bottom: 4px;
+            border-bottom: 1px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .file-selector a.active,
+        .file-selector a:hover {
+            color: var(--gold);
+            border-color: var(--gold-dim);
+        }
+
+        /* ── ACTIVE PERSISTENT RULES ── */
+        .section-divider {
+            width: 100%;
+            max-width: 640px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 40px 0 20px;
+        }
+        .section-divider .line { flex: 1; height: 1px; background: #222; }
+        .section-divider .label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            color: var(--gold-dim);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-divider .label::before,
+        .section-divider .label::after { content: '∞'; }
+
+        .persistent-grid {
+            width: 100%;
+            max-width: 640px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            min-height: 60px;
+        }
+
+        .persistent-card {
+            background: #111;
+            border: 1px solid #2a1a1a;
+            border-radius: 6px;
+            padding: 14px 14px 12px;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        .persistent-card .p-tag {
+            font-family: 'Cinzel', serif;
+            font-size: 0.5rem;
+            letter-spacing: 0.15em;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+        .persistent-card .p-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .persistent-card .p-rule {
+            font-family: 'Crimson Text', serif;
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+        .persistent-card .p-close {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+        .persistent-card .p-close:hover { color: #c9453a; }
+
+        .persistent-hint {
+            font-family: 'Cinzel', serif;
+            font-size: 0.55rem;
+            letter-spacing: 0.2em;
+            color: var(--text-dim);
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* ── HISTORY ── */
+        .history-section {
+            width: 100%;
+            max-width: 640px;
+            margin-top: 40px;
+        }
+        .history-toggle {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            color: var(--text-dim);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s;
+            margin-bottom: 12px;
+        }
+        .history-toggle:hover { color: var(--text-primary); }
+
+        .history-list {
+            list-style: none;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .history-list.hidden { display: none; }
+        .history-list li {
+            font-family: 'Crimson Text', serif;
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            padding: 5px 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .history-list li:first-child { color: var(--text-primary); }
+
+        /* Powercard flash */
+        .powercard-flash {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            text-align: center;
+            text-shadow: 0 0 20px rgba(201,168,76,0.6);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-eyebrow">MAGIC: THE GATHERING</div>
+        <h1>CHAOS</h1>
+        <div class="header-sub">SHAKE UP YOUR GAME WITH RANDOMIZED HOUSE RULES</div>
+    </div>
+
+    <!-- FILE SELECTOR -->
+    <div class="file-selector">
+        <a href="#" class="active" data-file="./data.json">Data JSON</a>
+        <a href="#" data-file="./chatgpt.json">ChatGPT JSON</a>
+    </div>
+
+    <!-- COUNTER -->
+    <div class="counter">
+        <div>
+            <span class="counter-num" id="remainingCount">—</span>
+            <span class="counter-label"> / <span id="totalCount">—</span> REMAINING</span>
+        </div>
+        <div class="counter-bar">
+            <div class="counter-fill" id="counterFill" style="width:0%"></div>
+        </div>
+    </div>
+
+    <!-- CARD FRAME -->
+    <div class="card-frame">
+        <div class="card-inner" id="cardInner">
+            <span class="corner corner-tl">✦</span>
+            <span class="corner corner-tr">✦</span>
+            <span class="corner corner-bl">✦</span>
+            <span class="corner corner-br">✦</span>
+
+            <div class="card-meta" id="cardMeta" style="display:none;">
+                <span class="tag tag-default" id="cardTag">—</span>
+                <span class="persistent-badge" id="persistentBadge" style="display:none;">PERSISTENT</span>
+            </div>
+
+            <div id="cardContent">
+                <div class="card-empty">Draw a chaos card to begin</div>
+            </div>
+
+            <div class="card-divider" id="cardDivider" style="display:none;"></div>
+            <div class="card-name" id="cardNameFooter" style="display:none;"></div>
+        </div>
+    </div>
+
+    <!-- BUTTONS -->
+    <button class="btn-draw" onclick="selectRandomCard()">
+        <span class="star">✦</span>
+        DRAW CHAOS
+        <span class="star">✦</span>
+    </button>
+
+    <button class="btn-reset" onclick="resetEverything()">RESET EVERYTHING</button>
+
+    <!-- POWERCARD TOGGLE -->
+    <div class="powercard-row">
+        <label class="toggle-switch">
+            <input type="checkbox" id="powercardToggle">
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+        </label>
+        ENABLE POWERCARD
+    </div>
+
+    <!-- ACTIVE PERSISTENT RULES -->
+    <div class="section-divider">
+        <div class="line"></div>
+        <div class="label">ACTIVE PERSISTENT RULES</div>
+        <div class="line"></div>
+    </div>
+
+    <div class="persistent-grid" id="persistentGrid"></div>
+    <div class="persistent-hint" id="persistentHint">Click × on a rule to remove it</div>
+
+    <!-- HISTORY -->
+    <div class="history-section">
+        <div class="section-divider">
+            <div class="line"></div>
+            <div class="label" style="font-size:0.55rem;">DRAW HISTORY</div>
+            <div class="line"></div>
+        </div>
+        <button class="history-toggle" id="toggleHistoryBtn">HIDE HISTORY</button>
+        <ul class="history-list" id="historyList"></ul>
+    </div>
+
+<script>
+// ── CATEGORY TAG MAPPING ──
+const categoryTagClass = {
+    life:     'tag-life',
+    mana:     'tag-mana',
+    combat:   'tag-combat',
+    spell:    'tag-spell',
+    creature: 'tag-creature',
+    wild:     'tag-wild',
+};
+
+function getTagClass(category) {
+    if (!category) return 'tag-default';
+    const key = category.toLowerCase();
+    return categoryTagClass[key] || 'tag-default';
+}
+
+// ── PERSISTENT RULES STORE ──
+let persistentRules = JSON.parse(localStorage.getItem('persistentRules') || '[]');
+
+function savePersistentRules() {
+    localStorage.setItem('persistentRules', JSON.stringify(persistentRules));
+}
+
+function renderPersistentRules() {
+    const grid = document.getElementById('persistentGrid');
+    const hint = document.getElementById('persistentHint');
+    grid.innerHTML = '';
+    persistentRules.forEach((rule, idx) => {
+        const card = document.createElement('div');
+        card.className = 'persistent-card';
+        card.innerHTML = `
+            <button class="p-close" onclick="removePersistentRule(${idx})">×</button>
+            <div class="p-tag">${(rule.Category || 'RULE').toUpperCase()}</div>
+            <div class="p-name">${rule.Name}</div>
+            <div class="p-rule">${rule.Rule}</div>
+        `;
+        grid.appendChild(card);
+    });
+    hint.style.display = persistentRules.length ? 'block' : 'none';
+}
+
+function removePersistentRule(idx) {
+    persistentRules.splice(idx, 1);
+    savePersistentRules();
+    renderPersistentRules();
+}
+
+// ── HISTORY ──
+function getHistory() { return JSON.parse(localStorage.getItem('last50Rules') || '[]'); }
+function saveHistory(h) { localStorage.setItem('last50Rules', JSON.stringify(h)); }
+
+function addToHistory(id) {
+    let h = getHistory();
+    h.push(id);
+    if (h.length > 50) h = h.slice(h.length - 50);
+    saveHistory(h);
+}
+
+let cachedCards = null;
+
+function updateHistoryUI(cards) {
+    const list = document.getElementById('historyList');
+    list.innerHTML = '';
+    const h = getHistory().slice().reverse();
+    h.forEach(id => {
+        const card = cards.find(c => c.ID === id);
+        if (card) {
+            const li = document.createElement('li');
+            li.textContent = card.Name;
+            list.appendChild(li);
+        }
+    });
+}
+
+// ── COUNTER ──
+function updateCounter(remaining, total) {
+    document.getElementById('remainingCount').textContent = remaining;
+    document.getElementById('totalCount').textContent = total;
+    const pct = total > 0 ? ((total - remaining) / total * 100) : 0;
+    document.getElementById('counterFill').style.width = pct + '%';
+}
+
+// ── CARD DISPLAY ──
+function showCard(card) {
+    const inner = document.getElementById('cardInner');
+    const meta = document.getElementById('cardMeta');
+    const tag = document.getElementById('cardTag');
+    const badge = document.getElementById('persistentBadge');
+    const content = document.getElementById('cardContent');
+    const divider = document.getElementById('cardDivider');
+    const nameFooter = document.getElementById('cardNameFooter');
+
+    inner.className = 'card-inner has-card';
+    meta.style.display = 'flex';
+
+    const cat = card.Category || card.Type || '';
+    tag.textContent = cat.toUpperCase() || 'RULE';
+    tag.className = 'tag ' + getTagClass(cat);
+
+    const isPersistent = card.Persistent === true || card.Persistent === 'true' || card.Persistent === 1;
+    badge.style.display = isPersistent ? 'flex' : 'none';
+
+    content.innerHTML = `<div class="card-rule">${card.Rule}</div>`;
+    divider.style.display = 'block';
+    nameFooter.style.display = 'block';
+    nameFooter.textContent = card.Name;
+
+    // Add to persistent if applicable
+    if (isPersistent && !persistentRules.find(r => r.ID === card.ID)) {
+        persistentRules.push(card);
+        savePersistentRules();
+        renderPersistentRules();
+    }
+}
+
+// ── MAIN DRAW FUNCTION ──
+async function selectRandomCard() {
+    const activeLink = document.querySelector('.file-selector a.active');
+    const selectedFile = activeLink.getAttribute('data-file');
+    const content = document.getElementById('cardContent');
+
+    try {
+        if (localStorage.getItem('powercardEnabled') === 'true') {
+            if (Math.random() < 0.04) {
+                const inner = document.getElementById('cardInner');
+                const meta = document.getElementById('cardMeta');
+                const divider = document.getElementById('cardDivider');
+                const nameFooter = document.getElementById('cardNameFooter');
+                inner.className = 'card-inner has-card';
+                meta.style.display = 'none';
+                divider.style.display = 'none';
+                nameFooter.style.display = 'none';
+                content.innerHTML = `<div class="powercard-flash">⚡ GET A RANDOM POWERCARD! ⚡</div>`;
+                return;
+            }
+        }
+
+        if (!cachedCards) {
+            const res = await fetch(selectedFile);
+            cachedCards = await res.json();
+        }
+
+        const cards = cachedCards;
+        let history = getHistory();
+        let available = cards.filter(c => !history.includes(c.ID));
+        if (available.length === 0) {
+            available = cards;
+            saveHistory([]);
+        }
+
+        const selected = available[Math.floor(Math.random() * available.length)];
+        addToHistory(selected.ID);
+        updateHistoryUI(cards);
+
+        const remaining = cards.filter(c => !getHistory().includes(c.ID)).length;
+        updateCounter(remaining, cards.length);
+
+        showCard(selected);
+
+    } catch (err) {
+        content.innerHTML = `<div style="color:#c9453a;font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.1em;text-align:center;">Error: ${err.message}</div>`;
+    }
+}
+
+// ── RESET ──
+function resetEverything() {
+    saveHistory([]);
+    persistentRules = [];
+    savePersistentRules();
+    renderPersistentRules();
+    cachedCards = null;
+
+    document.getElementById('cardInner').className = 'card-inner';
+    document.getElementById('cardMeta').style.display = 'none';
+    document.getElementById('cardContent').innerHTML = '<div class="card-empty">Draw a chaos card to begin</div>';
+    document.getElementById('cardDivider').style.display = 'none';
+    document.getElementById('cardNameFooter').style.display = 'none';
+    document.getElementById('remainingCount').textContent = '—';
+    document.getElementById('totalCount').textContent = '—';
+    document.getElementById('counterFill').style.width = '0%';
+    document.getElementById('historyList').innerHTML = '';
+}
+
+// ── FILE SELECTOR ──
+document.querySelectorAll('.file-selector a').forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('.file-selector a').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        cachedCards = null;
+    });
+});
+
+// ── POWERCARD TOGGLE ──
+document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('powercardToggle');
+    toggle.checked = localStorage.getItem('powercardEnabled') === 'true';
+    toggle.addEventListener('change', () => {
+        localStorage.setItem('powercardEnabled', toggle.checked);
+    });
+
+    // History toggle
+    const histBtn = document.getElementById('toggleHistoryBtn');
+    const histList = document.getElementById('historyList');
+    const collapsed = localStorage.getItem('historyCollapsed') === 'true';
+    if (collapsed) { histList.classList.add('hidden'); histBtn.textContent = 'SHOW HISTORY'; }
+    histBtn.addEventListener('click', () => {
+        histList.classList.toggle('hidden');
+        const now = histList.classList.contains('hidden');
+        localStorage.setItem('historyCollapsed', now);
+        histBtn.textContent = now ? 'SHOW HISTORY' : 'HIDE HISTORY';
+    });
+
+    renderPersistentRules();
+});
+</script>
+</body>
+</html>
