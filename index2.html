@@ -194,12 +194,14 @@
         /* Card rule text */
         .card-rule {
             font-family: 'Crimson Text', serif;
-            font-size: 1.35rem;
-            font-style: italic;
-            line-height: 1.55;
+            font-size: 1.25rem;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 1.65;
             color: var(--text-primary);
             text-align: center;
             padding: 0 10px;
+            letter-spacing: 0.01em;
         }
 
         .card-divider {
@@ -486,15 +488,11 @@
         <a href="#" data-file="./chatgpt.json">ChatGPT JSON</a>
     </div>
 
-    <!-- COUNTER -->
-    <div class="counter">
-        <div>
-            <span class="counter-num" id="remainingCount">—</span>
-            <span class="counter-label"> / <span id="totalCount">—</span> REMAINING</span>
-        </div>
-        <div class="counter-bar">
-            <div class="counter-fill" id="counterFill" style="width:0%"></div>
-        </div>
+    <!-- COUNTER (hidden, kept for logic) -->
+    <div style="display:none;">
+        <span id="remainingCount"></span>
+        <span id="totalCount"></span>
+        <div id="counterFill"></div>
     </div>
 
     <!-- CARD FRAME -->
