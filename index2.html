@@ -26,7 +26,7 @@
             background-color: var(--dark-bg);
             background-image: 
                 radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 60%),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%230d0d0d'/%3E%3Crect width='1' height='1' fill='%23111' opa[...]
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%230d0d0d'/%3E%3Crect width='1' height='1' fill='%23111' opacity='0.5'/%3E%3C/svg%3E");
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
@@ -471,17 +471,6 @@
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
-
-        /* Version footer */
-        .version-footer {
-            font-family: 'Cinzel', serif;
-            font-size: 0.5rem;
-            letter-spacing: 0.15em;
-            color: var(--text-dim);
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #1a1a1a;
-        }
     </style>
 </head>
 <body>
@@ -565,11 +554,6 @@
         </div>
         <button class="history-toggle" id="toggleHistoryBtn">HIDE HISTORY</button>
         <ul class="history-list" id="historyList"></ul>
-    </div>
-
-    <!-- VERSION FOOTER -->
-    <div class="version-footer">
-        Version: 1da29d6 (Increase font size)
     </div>
 
 <script>
