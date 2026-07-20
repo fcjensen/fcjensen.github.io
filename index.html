@@ -453,6 +453,35 @@
             border-bottom: 1px solid #1a1a1a;
         }
         .history-list li:first-child { color: var(--text-primary); }
+        .history-list li {
+            position: relative;
+            cursor: default;
+        }
+
+        .history-tooltip {
+            position: fixed;
+            width: max-content;
+            max-width: 320px;
+            padding: 10px 14px;
+            background: #0f0d09;
+            border: 1px solid var(--gold-dim);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: 'Crimson Text', serif;
+            font-size: 1.05rem;
+            line-height: 1.35;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease, transform 0.15s ease;
+            transform: translateY(4px);
+            z-index: 100;
+        }
+        .history-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         /* Powercard flash */
         .powercard-flash {
@@ -485,7 +514,6 @@
     <!-- FILE SELECTOR -->
     <div class="file-selector">
         <a href="#" class="active" data-file="./data.json">Data JSON</a>
-        <a href="#" data-file="./chatgpt.json">ChatGPT JSON</a>
     </div>
 
     <!-- COUNTER (hidden, kept for logic) -->
@@ -555,6 +583,8 @@
         <button class="history-toggle" id="toggleHistoryBtn">HIDE HISTORY</button>
         <ul class="history-list" id="historyList"></ul>
     </div>
+
+    <div class="history-tooltip" id="historyTooltip"></div>
 
 <script>
 // ── CATEGORY TAG MAPPING ──
@@ -626,6 +656,7 @@ function updateHistoryUI(cards) {
         if (card) {
             const li = document.createElement('li');
             li.textContent = card.Name;
+            li.setAttribute('data-rule', card.Rule);
             list.appendChild(li);
         }
     });
@@ -771,6 +802,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     renderPersistentRules();
+
+    // History tooltip
+    const tooltip = document.getElementById('historyTooltip');
+    histList.addEventListener('mouseover', e => {
+        const li = e.target.closest('li');
+        if (!li || !histList.contains(li)) return;
+        const rule = li.getAttribute('data-rule');
+        if (!rule) return;
+        tooltip.textContent = rule;
+        tooltip.classList.add('visible');
+
+        const liRect = li.getBoundingClientRect();
+        tooltip.style.left = '0px';
+        tooltip.style.top = '0px';
+        const tipRect = tooltip.getBoundingClientRect();
+
+        let left = liRect.left + liRect.width / 2 - tipRect.width / 2;
+        left = Math.max(8, Math.min(left, window.innerWidth - tipRect.width - 8));
+
+        let top = liRect.top - tipRect.height - 8;
+        if (top < 8) top = liRect.bottom + 8;
+
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
+    });
+    histList.addEventListener('mouseout', e => {
+        const li = e.target.closest('li');
+        if (!li) return;
+        if (e.relatedTarget && li.contains(e.relatedTarget)) return;
+        tooltip.classList.remove('visible');
+    });
 });
 </script>
 </body>
