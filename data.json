@@ -33,7 +33,7 @@
 {"ID": 32, "Name": "Confiscate ", "Rule": "Gain control of target permanent.\r\n", "Persistent": false},
 {"ID": 33, "Name": "Reset", "Rule": "All players have 10 life.\r\n", "Persistent": false},
 {"ID": 34, "Name": "Price of Immortality ", "Rule": "Discard a card. You gain 6 life.", "Persistent": false},
-{"ID": 35, "Name": "Giant Growth ", "Rule": "Roll 1d6. Target creature gets +X/+X until end of turn where X is the roll.\r\n", "Persistent": false},
+{"ID": 35, "Name": "Giant Growth ", "Rule": "Roll 1d6. Target creature gets +X/+X until end of turn\r\n", "Persistent": false},
 {"ID": 36, "Name": "MindSlayer ", "Rule": "Gain control of target players next turn(including roll).", "Persistent": false},
 {"ID": 37, "Name": "Regrowth ", "Rule": "Return target card from your graveyard to your hand. ", "Persistent": false},
 {"ID": 38, "Name": "rekeeS mrotS ", "Rule": "Take 1 damage for each card in your hand.", "Persistent": false},
